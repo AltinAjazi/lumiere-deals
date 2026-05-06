@@ -309,6 +309,16 @@ export default function Home() {
     async function loadSupabaseData() {
       setLoading(true);
 
+      if (!supabase) {
+        setProducts(sampleProducts);
+        setStores(allStores);
+        setNotice(
+          "Supabase connection is not loading yet. Showing sample products, but full dropdowns remain available."
+        );
+        setLoading(false);
+        return;
+      }
+
       try {
         const { data: storeData, error: storeError } = await supabase
           .from("stores")
